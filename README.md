@@ -1,54 +1,51 @@
 # ULX
-ULX is an admin mod for [Garry's Mod](https://gmod.facepunch.com/).
+ULX est un mod d'administration pour [Garry's Mod](https://gmod.facepunch.com/).
 
-ULX offers server admins an AMXX-style support. It allows multiple admins with different access levels on the same server.
-It features commands from basic kick, ban, and slay to fancier commands such as blind, freeze, voting, and more.
+ULX offre aux administrateurs de serveurs un support de type AMXX. Il permet à plusieurs administrateurs avec différents niveaux d'accès d'être sur le même serveur. Il propose des commandes allant des basiques comme expulser, bannir et tuer, à des commandes plus sophistiquées comme aveugler, geler, voter, et plus encore.
 
-Visit our homepage at https://ulyssesmod.net.
+Visitez notre page d'accueil à [https://ulyssesmod.net](https://ulyssesmod.net).
 
-You can talk to us on our forums at https://forums.ulyssesmod.net.
+Vous pouvez nous parler sur nos forums à [https://forums.ulyssesmod.net](https://forums.ulyssesmod.net).
 
-## Requirements
-ULX requires the latest version of [ULib](https://github.com/TeamUlysses/ulib) to be installed on the server.
+## Exigences
+ULX nécessite la dernière version de [ULib](https://github.com/TeamUlysses/ulib) installée sur le serveur.
 
 ## Installation
 
 ### Workshop
-ULX's workshop ID is `557962280`. You can subscribe to ULX via Workshop [here](https://steamcommunity.com/sharedfiles/filedetails/?id=557962280).
-Don't forget you'll also need ULib, whose workshop ID is `557962238` and can be found [here](https://steamcommunity.com/sharedfiles/filedetails/?id=557962238).
+L'ID du workshop de ULX est `557962280`. Vous pouvez vous abonner à ULX via le Workshop [ici](https://steamcommunity.com/sharedfiles/filedetails/?id=557962280). N'oubliez pas que vous aurez également besoin de ULib, dont l'ID du workshop est `557962238` et que vous pouvez trouver [ici](https://steamcommunity.com/sharedfiles/filedetails/?id=557962238).
 
-### Classic
-To install ULX, simply extract the files from the downloaded archive to your garrysmod/addons/ folder.
-When you've done this, you should have a file structure like this:
+### Classique
+Pour installer ULX, il suffit d'extraire les fichiers de l'archive téléchargée dans votre dossier garrysmod/addons/. Une fois cela fait, vous devriez avoir une structure de fichiers comme ceci :
 
 `(garrysmod)/addons/ulx/lua/ulib/modules/ulx_init.lua`
 
 `(garrysmod)/addons/ulx/lua/ulx/modules/fun.lua`
 
-You absolutely, positively have to do a full server restart after installing the files. A simple map change will not cut it!
+Vous devez absolument redémarrer complètement le serveur après avoir installé les fichiers. Un simple changement de carte ne suffira pas !
 
-## Usage
-**To give yourself a jump start into ULX, simply remember the commands `ulx help` and `ulx menu`.**
+## Utilisation
+**Pour vous lancer rapidement dans ULX, souvenez-vous simplement des commandes `ulx help` et `ulx menu`.**
 
-To access the commands and settings in ULX, you can open the GUI with `ulx menu` in console. It is recommended to bind this command to a keyboard key. Additionally, you can use console commands in the form of `ulx (command) (arguments)` or chat commands in the form of `!(command) (arguments)`.
+Pour accéder aux commandes et aux paramètres dans ULX, vous pouvez ouvrir l'interface graphique avec `ulx menu` dans la console. Il est recommandé de lier cette commande à une touche du clavier. De plus, vous pouvez utiliser les commandes de la console sous la forme `ulx (commande) (arguments)` ou les commandes de chat sous la forme `!(commande) (arguments)`.
 
-To add users to usergroups, navigate to the "Groups" tab of the GUI and select a group. Then use the "Add" button to add connected players. You can also use the `ulx adduser (user) (group)` command. If you absolutely need to, you can also edit the `data/lib/users.txt` file.
+Pour ajouter des utilisateurs aux groupes d'utilisateurs, allez dans l'onglet "Groupes" de l'interface graphique et sélectionnez un groupe. Ensuite, utilisez le bouton "Ajouter" pour ajouter des joueurs connectés. Vous pouvez également utiliser la commande `ulx adduser (utilisateur) (groupe)`. Si vous en avez absolument besoin, vous pouvez également modifier le fichier `data/lib/users.txt`.
 
-A word about superadmins: Superadmins are considered the highest usergroup. They have access to all the commands in ULX, the ability to override other user's immunity, and are shown log messages which are hidden from other players (EG, they are shown rcon commands admins are running). Superadmins also have the power to give and revoke access to commands using userallow and userdeny.
+Un mot sur les superadmins : Les superadmins sont considérés comme le groupe d'utilisateurs le plus élevé. Ils ont accès à toutes les commandes dans ULX, la capacité de passer outre l'immunité des autres utilisateurs, et voient les messages de log qui sont cachés aux autres joueurs (par exemple, ils voient les commandes rcon exécutées par les administrateurs). Les superadmins ont également le pouvoir de donner et de révoquer l'accès aux commandes en utilisant userallow et userdeny.
 
-All commands are preceded by `ulx `. Type `ulx help` in a console without the quotes for help.
+Toutes les commandes sont précédées de `ulx `. Tapez `ulx help` dans une console sans les guillemets pour obtenir de l'aide.
 
-Check out the config folder in ulx for some more goodies.
+Consultez le dossier de configuration dans ulx pour d'autres fonctionnalités.
 
-## Credits
-ULX is brought to you by..
+## Crédits
+ULX est développé par :
 
-* Brett "Megiddo" Smith - Contact: <mailto:megiddo@ulyssesmod.net>
-* JamminR - Contact: <mailto:jamminr@ulyssesmod.net>
-* Stickly Man! - Contact: <mailto:sticklyman@ulyssesmod.net>
-* MrPresident - Contact: <mailto:mrpresident@ulyssesmod.net>
+* Brett "Megiddo" Smith - Contact : <mailto:megiddo@ulyssesmod.net>
+* JamminR - Contact : <mailto:jamminr@ulyssesmod.net>
+* Stickly Man! - Contact : <mailto:sticklyman@ulyssesmod.net>
+* MrPresident - Contact : <mailto:mrpresident@ulyssesmod.net>
 
-A big thanks to JamminR for listening to the rest of the team (especially Megiddo) ramble on, never giving up on us, and for giving the project fresh insights.
+Un grand merci à JamminR pour avoir écouté le reste de l'équipe (surtout Megiddo) divaguer, ne jamais nous abandonner, et pour avoir apporté de nouvelles perspectives au projet.
 
 ## Changelog
-See the [CHANGELOG](CHANGELOG.md) file for information regarding changes between releases.
+Voir le fichier [CHANGELOG](CHANGELOG.md) pour des informations sur les changements entre les versions.
