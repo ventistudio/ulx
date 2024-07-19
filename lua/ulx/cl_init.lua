@@ -13,7 +13,7 @@ if not ulx then
 	end
 
 	for _, file in ipairs( sh_modules ) do
-		Msg( "[ULX] Loading SHARED module: " .. file .. "\n" )
+		Msg( "[ULX] Chargement du module partagé: " .. file .. "\n" )
 		include( "ulx/modules/sh/" .. file )
 	end
 end
