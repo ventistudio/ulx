@@ -1,61 +1,61 @@
-local logEcho                   = ulx.convar( "logEcho", "2", "Echo mode 0-Off 1-Anonymous 2-Full", ULib.ACCESS_SUPERADMIN )
-local logEchoColors             = ulx.convar( "logEchoColors", "1", "Whether or not echoed commands in chat are colored", ULib.ACCESS_SUPERADMIN )
-local logEchoColorDefault       = ulx.convar( "logEchoColorDefault", "151 211 255", "The default text color (RGB)", ULib.ACCESS_SUPERADMIN )
-local logEchoColorConsole       = ulx.convar( "logEchoColorConsole", "0 0 0", "The color that Console gets when using actions", ULib.ACCESS_SUPERADMIN )
-local logEchoColorSelf          = ulx.convar( "logEchoColorSelf", "75 0 130", "The color for yourself in echoes", ULib.ACCESS_SUPERADMIN )
-local logEchoColorEveryone      = ulx.convar( "logEchoColorEveryone", "0 128 128", "The color to use when everyone is targeted in echoes", ULib.ACCESS_SUPERADMIN )
-local logEchoColorPlayerAsGroup = ulx.convar( "logEchoColorPlayerAsGroup", "1", "Whether or not to use group colors for players.", ULib.ACCESS_SUPERADMIN )
-local logEchoColorPlayer        = ulx.convar( "logEchoColorPlayer", "255 255 0", "The color to use for players when ulx logEchoColorPlayerAsGroup is set to 0.", ULib.ACCESS_SUPERADMIN )
-local logEchoColorMisc          = ulx.convar( "logEchoColorMisc", "0 255 0", "The color for anything else in echoes", ULib.ACCESS_SUPERADMIN )
-local logFile                   = ulx.convar( "logFile", "1", "Log to file (Can still echo if off). This is a global setting, nothing will be logged to file with this off.", ULib.ACCESS_SUPERADMIN )
-local logEvents                 = ulx.convar( "logEvents", "1", "Log events (player connect, disconnect, death)", ULib.ACCESS_SUPERADMIN )
-local logChat                   = ulx.convar( "logChat", "1", "Log player chat", ULib.ACCESS_SUPERADMIN )
-local logSpawns                 = ulx.convar( "logSpawns", "1", "Log when players spawn objects (props, effects, etc)", ULib.ACCESS_SUPERADMIN )
-local logSpawnsEcho             = ulx.convar( "logSpawnsEcho", "1", "Echo spawns to players in server. -1 = Off, 0 = Console only, 1 = Admins only, 2 = All players. (Echoes to console)", ULib.ACCESS_SUPERADMIN )
-local logJoinLeaveEcho          = ulx.convar( "logJoinLeaveEcho", "1", "Echo players leaves and joins to admins in the server (useful for banning minges)", ULib.ACCESS_SUPERADMIN )
-local logDir                    = ulx.convar( "logDir", "ulx_logs", "The log dir under garrysmod/data", ULib.ACCESS_SUPERADMIN )
+local logEcho                   = ulx.convar( "logEcho", "2", "Mode d'écho 0-Désactivé 1-Anonyme 2-Complet", ULib.ACCESS_SUPERADMIN )
+local logEchoColors             = ulx.convar( "logEchoColors", "1", "Si les commandes écho dans le chat sont colorées ou non", ULib.ACCESS_SUPERADMIN )
+local logEchoColorDefault       = ulx.convar( "logEchoColorDefault", "151 211 255", "La couleur de texte par défaut (RGB)", ULib.ACCESS_SUPERADMIN )
+local logEchoColorConsole       = ulx.convar( "logEchoColorConsole", "0 0 0", "La couleur que la console obtient lors de l'utilisation des actions", ULib.ACCESS_SUPERADMIN )
+local logEchoColorSelf          = ulx.convar( "logEchoColorSelf", "75 0 130", "La couleur pour vous-même dans les échos", ULib.ACCESS_SUPERADMIN )
+local logEchoColorEveryone      = ulx.convar( "logEchoColorEveryone", "0 128 128", "La couleur à utiliser lorsque tout le monde est ciblé dans les échos", ULib.ACCESS_SUPERADMIN )
+local logEchoColorPlayerAsGroup = ulx.convar( "logEchoColorPlayerAsGroup", "1", "Si les couleurs de groupe doivent être utilisées pour les joueurs.", ULib.ACCESS_SUPERADMIN )
+local logEchoColorPlayer        = ulx.convar( "logEchoColorPlayer", "255 255 0", "La couleur à utiliser pour les joueurs lorsque ulx logEchoColorPlayerAsGroup est réglé sur 0.", ULib.ACCESS_SUPERADMIN )
+local logEchoColorMisc          = ulx.convar( "logEchoColorMisc", "0 255 0", "La couleur pour tout le reste dans les échos", ULib.ACCESS_SUPERADMIN )
+local logFile                   = ulx.convar( "logFile", "1", "Journaliser dans un fichier (peut encore écho si désactivé). C'est un paramètre global, rien ne sera journalisé dans un fichier si cela est désactivé.", ULib.ACCESS_SUPERADMIN )
+local logEvents                 = ulx.convar( "logEvents", "1", "Journaliser les événements (connexion, déconnexion, mort du joueur)", ULib.ACCESS_SUPERADMIN )
+local logChat                   = ulx.convar( "logChat", "1", "Journaliser le chat des joueurs", ULib.ACCESS_SUPERADMIN )
+local logSpawns                 = ulx.convar( "logSpawns", "1", "Journaliser lorsque les joueurs font apparaître des objets (props, effets, etc.)", ULib.ACCESS_SUPERADMIN )
+local logSpawnsEcho             = ulx.convar( "logSpawnsEcho", "1", "Écho des apparitions aux joueurs sur le serveur. -1 = Désactivé, 0 = Console uniquement, 1 = Admins uniquement, 2 = Tous les joueurs. (Échos à la console)", ULib.ACCESS_SUPERADMIN )
+local logJoinLeaveEcho          = ulx.convar( "logJoinLeaveEcho", "1", "Écho des départs et arrivées des joueurs aux admins sur le serveur (utile pour bannir les perturbateurs)", ULib.ACCESS_SUPERADMIN )
+local logDir                    = ulx.convar( "logDir", "ulx_logs", "Le répertoire de journalisation sous garrysmod/data", ULib.ACCESS_SUPERADMIN )
 
 local hiddenechoAccess = "ulx hiddenecho"
-ULib.ucl.registerAccess( hiddenechoAccess, ULib.ACCESS_SUPERADMIN, "Ability to see hidden echoes", "Other" ) -- Give superadmins access to see hidden echoes by default
+ULib.ucl.registerAccess( hiddenechoAccess, ULib.ACCESS_SUPERADMIN, "Capacité à voir les échos cachés", "Autre" ) -- Donner aux superadmins l'accès pour voir les échos cachés par défaut
 
 local seeanonymousechoAccess = "ulx seeanonymousechoes"
-ULib.ucl.registerAccess( seeanonymousechoAccess, ULib.ACCESS_ADMIN, "Ability to see who uses a command even with ulx logEcho set to 1", "Other" )
+ULib.ucl.registerAccess( seeanonymousechoAccess, ULib.ACCESS_ADMIN, "Capacité à voir qui utilise une commande même avec ulx logEcho réglé sur 1", "Autre" )
 
 local spawnechoAccess = "ulx spawnecho"
-ULib.ucl.registerAccess( spawnechoAccess, ULib.ACCESS_ADMIN, "Ability to see spawn echoes and steamids from joined players in console", "Other" ) -- Give admins access to see spawn echoes by default
+ULib.ucl.registerAccess( spawnechoAccess, ULib.ACCESS_ADMIN, "Capacité à voir les échos de spawn et les steamids des joueurs connectés dans la console", "Autre" ) -- Donner aux admins l'accès pour voir les échos de spawn par défaut
 
-local curDateStr = os.date( "%Y-%m-%d" ) -- This will hold the date string (YYYY-mm-dd) we think it is right now.
+local curDateStr = os.date( "%Y-%m-%d" ) -- Cela contiendra la chaîne de date (AAAA-mm-jj) que nous pensons être actuellement.
 
--- Utility stuff for our logs...
-ulx.log_file = ulx.log_file or nil
+-- Utilitaires pour nos journaux...
+ulx.log_file = ulx.log_file ou nil
 local function init()
-	curDateStr = os.date( "%Y-%m-%d" )
-	if logFile:GetBool() then
-		ULib.fileCreateDir( "data/" .. logDir:GetString() )
-		ulx.log_file = os.date( "data/" .. logDir:GetString() .. "/" .. "%m-%d-%y" .. ".txt" )
-		if not ULib.fileExists( ulx.log_file ) then
-			ULib.fileWrite( ulx.log_file, "" )
-		else
-			ulx.logWriteln( "\r\n\r\n" ) -- Make some space
-		end
-		ulx.logString( "New map: " .. game.GetMap() )
-	end
+    curDateStr = os.date( "%Y-%m-%d" )
+    if logFile:GetBool() then
+        ULib.fileCreateDir( "data/" .. logDir:GetString() )
+        ulx.log_file = os.date( "data/" .. logDir:GetString() .. "/" .. "%m-%d-%y" .. ".txt" )
+        if not ULib.fileExists( ulx.log_file ) then
+            ULib.fileWrite( ulx.log_file, "" )
+        else
+            ulx.logWriteln( "\r\n\r\n" ) -- Faire de la place
+        end
+        ulx.logString( "Nouvelle carte : " .. game.GetMap() )
+    end
 end
-hook.Add( ulx.HOOK_ULXDONELOADING, "InitULX", init ) -- So we load the settings first
+hook.Add( ulx.HOOK_ULXDONELOADING, "InitULX", init ) -- Pour que nous chargions d'abord les paramètres
 
 local function next_log()
-	if logFile:GetBool() then
-		local new_log = os.date( "data/" .. logDir:GetString() .. "/" .. "%m-%d-%y" .. ".txt" )
-		if new_log == ulx.log_file then -- Make sure the date has changed.
-			return
-		end
-		local old_log = ulx.log_file
-		ulx.logWriteln( "<Logging continued in \"" .. new_log .. "\">" )
-		ulx.log_file = new_log
-		ULib.fileWrite( ulx.log_file, "" )
-		ulx.logWriteln( "<Logging continued from \"" .. old_log .. "\">" )
-	end
-	curDateStr = os.date( "%Y-%m-%d" )
+    if logFile:GetBool() then
+        local new_log = os.date( "data/" .. logDir:GetString() .. "/" .. "%m-%d-%y" .. ".txt" )
+        if new_log == ulx.log_file then -- S'assurer que la date a changé.
+            return
+        end
+        local old_log = ulx.log_file
+        ulx.logWriteln( "<Journalisation continuée dans \"" .. new_log .. "\">" )
+        ulx.log_file = new_log
+        ULib.fileWrite( ulx.log_file, "" )
+        ulx.logWriteln( "<Journalisation continuée depuis \"" .. old_log .. "\">" )
+    end
+    curDateStr = os.date( "%Y-%m-%d" )
 end
 
 function ulx.logUserAct( ply, target, action, hide_echo )
@@ -67,7 +67,7 @@ function ulx.logUserAct( ply, target, action, hide_echo )
 		nick = "(Console)"
 	end
 
-	action = action:gsub( "#T", target:Nick(), 1 ) -- Everything needs this replacement
+	action = action:gsub( "#T", target:Nick(), 1 ) -- Tout a besoin de ce remplacement
 	local level = logEcho:GetInt()
 
 	if not hide_echo and level > 0 then
@@ -77,8 +77,8 @@ function ulx.logUserAct( ply, target, action, hide_echo )
 			ULib.tsay( _, echo, true )
 		end
 	elseif level > 0 then
-		local echo = action:gsub( "#A", "(SILENT)" .. nick, 1 )
-		ULib.tsay( ply, echo, true ) -- Whether or not the originating player has access, they're getting the echo.
+		local echo = action:gsub( "#A", "(silencieux)" .. nick, 1 )
+		ULib.tsay( ply, echo, true ) -- Que le joueur d’origine ait accès ou non, il reçoit l’écho.
 
 		local players = player.GetAll()
 		for _, player in ipairs( players ) do
@@ -115,8 +115,8 @@ function ulx.logServAct( ply, action, hide_echo )
 			ULib.tsay( _, echo, true )
 		end
 	elseif level > 0 then
-		local echo = action:gsub( "#A", "(SILENT)" .. nick, 1 )
-		ULib.tsay( ply, echo, true ) -- Whether or not the originating player has access, they're getting the echo.
+		local echo = action:gsub( "#A", "(silencieux)" .. nick, 1 )
+		ULib.tsay( ply, echo, true ) -- Que le joueur d’origine ait accès ou non, il reçoit l’écho.
 
 		local players = player.GetAll()
 		for _, player in ipairs( players ) do
@@ -183,7 +183,7 @@ local mapStartTime = os.time()
 local function playerConnect( name, address )
 	joinTimer[address] = os.time()
 	if logEvents:GetBool() then
-		ulx.logString( string.format( "Client \"%s\" connected.", name ) )
+		ulx.logString( string.format( "Client \"%s\" connecté.", name ) )
 	end
 end
 hook.Add( "PlayerConnect", "ULXLogConnect", playerConnect, HOOK_MONITOR_HIGH )
@@ -193,7 +193,7 @@ local function playerInitialSpawn( ply )
 	local seconds = os.time() - (joinTimer[ip] or mapStartTime)
 	joinTimer[ip] = nil
 
-	local txt = string.format( "Client \"%s\" spawned in server <%s> (took %i seconds).", ply:Nick(), ply:SteamID(), seconds )
+	local txt = string.format( "Le client "%s" a été généré sur le serveur <%s> (a pris %i secondes).", ply:Nick(), ply:SteamID(), seconds )
 	if logEvents:GetBool() then
 		ulx.logString( txt )
 	end
@@ -205,7 +205,7 @@ end
 hook.Add( "PlayerInitialSpawn", "ULXLogInitialSpawn", playerInitialSpawn, HOOK_MONITOR_HIGH )
 
 local function playerDisconnect( ply )
-	local txt = string.format( "Dropped \"%s\" from server<%s>", ply:Nick(), ply:SteamID() )
+	local txt = string.format( "Retiré "%s" du serveur <%s>", ply:Nick(), ply:SteamID() )
 	if logEvents:GetBool() then
 		ulx.logString( txt )
 	end
@@ -222,13 +222,13 @@ local function playerDeath( victim, weapon, killer )
 		if not IsValid( killer ) then return end
 
 		if not killer:IsPlayer() then
-			ulx.logString( string.format( "%s was killed by %s", victim:Nick(), killer:GetClass() ) )
+			ulx.logString( string.format( "%s à été tuer par %s", victim:Nick(), killer:GetClass() ) )
 		elseif weapon == nil or not weapon:IsValid() then
-			ulx.logString( string.format( "%s killed %s", killer:Nick(), victim:Nick() ) )
+			ulx.logString( string.format( "%s à tuer %s", killer:Nick(), victim:Nick() ) )
 		elseif victim ~= killer then
-			ulx.logString( string.format( "%s killed %s using %s", killer:Nick(), victim:Nick(), weapon:GetClass() ) )
+			ulx.logString( string.format( "%s à tuer %s avec %s", killer:Nick(), victim:Nick(), weapon:GetClass() ) )
 		else
-			ulx.logString( string.format( "%s suicided!", victim:Nick() ) )
+			ulx.logString( string.format( "%s c'est susidé", victim:Nick() ) )
 		end
 	end
 end
@@ -236,7 +236,7 @@ hook.Add( "PlayerDeath", "ULXLogDeath", playerDeath, HOOK_MONITOR_HIGH )
 
 -- Check name changes
 local function nameCheck( ply, oldnick, newnick )
-	local msg = string.format( "%s<%s> changed their name to %s", oldnick, ply:SteamID(), newnick )
+	local msg = string.format( "%s<%s> a changé son nom en %s", oldnick, ply:SteamID(), newnick )
 
 	if game.IsDedicated() then
 		Msg( msg .. "\n" )
@@ -250,7 +250,7 @@ hook.Add( "ULibPlayerNameChanged", "ULXNameChange", nameCheck )
 
 local function shutDown()
 	if logEvents:GetBool() then
-		ulx.logString( "Server is shutting down/changing levels." )
+		ulx.logString( "Le serveur est en train de s’arrêter/changer de niveau." )
 	end
 end
 hook.Add( "ShutDown", "ULXLogShutDown", shutDown, HOOK_MONITOR_HIGH )
@@ -273,34 +273,35 @@ function ulx.logSpawn( txt )
 end
 
 local function propSpawn( ply, model, ent )
-	ulx.logSpawn( string.format( "%s<%s> spawned model %s", ply:Nick(), ply:SteamID(), ulx.standardizeModel( model ) ) )
+    ulx.logSpawn( string.format( "%s<%s> a généré le modèle %s", ply:Nick(), ply:SteamID(), ulx.standardizeModel( model ) ) )
 end
 hook.Add( "PlayerSpawnedProp", "ULXLogPropSpawn", propSpawn, HOOK_MONITOR_LOW )
 
 local function ragdollSpawn( ply, model, ent )
-	ulx.logSpawn( string.format( "%s<%s> spawned ragdoll %s", ply:Nick(), ply:SteamID(), ulx.standardizeModel( model ) ) )
+    ulx.logSpawn( string.format( "%s<%s> a généré le ragdoll %s", ply:Nick(), ply:SteamID(), ulx.standardizeModel( model ) ) )
 end
 hook.Add( "PlayerSpawnedRagdoll", "ULXLogRagdollSpawn", ragdollSpawn, HOOK_MONITOR_LOW )
 
 local function effectSpawn( ply, model, ent )
-	ulx.logSpawn( string.format( "%s<%s> spawned effect %s", ply:Nick(), ply:SteamID(), ulx.standardizeModel( model ) ) )
+    ulx.logSpawn( string.format( "%s<%s> a généré l'effet %s", ply:Nick(), ply:SteamID(), ulx.standardizeModel( model ) ) )
 end
 hook.Add( "PlayerSpawnedEffect", "ULXLogEffectSpawn", effectSpawn, HOOK_MONITOR_LOW )
 
 local function vehicleSpawn( ply, ent )
-	ulx.logSpawn( string.format( "%s<%s> spawned vehicle %s", ply:Nick(), ply:SteamID(), ulx.standardizeModel( ent:GetModel() or "unknown" ) ) )
+    ulx.logSpawn( string.format( "%s<%s> a généré le véhicule %s", ply:Nick(), ply:SteamID(), ulx.standardizeModel( ent:GetModel() or "unknown" ) ) )
 end
 hook.Add( "PlayerSpawnedVehicle", "ULXLogVehicleSpawn", vehicleSpawn, HOOK_MONITOR_LOW )
 
 local function sentSpawn( ply, ent )
-	ulx.logSpawn( string.format( "%s<%s> spawned sent %s", ply:Nick(), ply:SteamID(), ent:GetClass() ) )
+    ulx.logSpawn( string.format( "%s<%s> a généré le sent %s", ply:Nick(), ply:SteamID(), ent:GetClass() ) )
 end
 hook.Add( "PlayerSpawnedSENT", "ULXLogSentSpawn", sentSpawn, HOOK_MONITOR_LOW )
 
 local function NPCSpawn( ply, ent )
-	ulx.logSpawn( string.format( "%s<%s> spawned NPC %s", ply:Nick(), ply:SteamID(), ent:GetClass() ) )
+    ulx.logSpawn( string.format( "%s<%s> a généré le PNJ %s", ply:Nick(), ply:SteamID(), ent:GetClass() ) )
 end
 hook.Add( "PlayerSpawnedNPC", "ULXLogNPCSpawn", NPCSpawn, HOOK_MONITOR_LOW )
+
 
 local default_color
 local console_color
@@ -314,7 +315,7 @@ local function updateColors()
 	for i=1, #cvars do
 		local cvar = cvars[ i ]
 		local pieces = ULib.explode( "%s+", cvar:GetString() )
-		if not #pieces == 3 then Msg( "Warning: Tried to set ulx log color cvar with bad data\n" ) return end
+		if not #pieces == 3 then Msg( "Avertissement : Tentative de définir la variable cvar de couleur de journal ulx avec des données incorrectes\n" ) return end
 		local color = Color( tonumber( pieces[ 1 ] ), tonumber( pieces[ 2 ] ), tonumber( pieces[ 3 ] ) )
 
 		if cvar == logEchoColorDefault then default_color = color
@@ -358,7 +359,7 @@ local function makePlayerList( calling_ply, target_list, showing_ply, use_self_s
 	elseif is_admin_part then
 		local target = target_list[ 1 ] -- Only one target here
 		if anonymous and target ~= showing_ply then
-			return { everyone_color, "(Someone)" }
+			return { everyone_color, "(Quelqu'un)" }
 		elseif not target:IsValid() then
 			return { console_color, "(Console)" }
 		end
@@ -380,20 +381,20 @@ local function makePlayerList( calling_ply, target_list, showing_ply, use_self_s
 		table.insert( strs, plyColor( target, showing_ply ) )
 		if target == showing_ply then
 			if not use_self_suffix or calling_ply ~= showing_ply then
-				table.insert( strs, "You" )
+				table.insert( strs, "Vous" )
 			else
-				table.insert( strs, "Yourself" )
+				table.insert( strs, "Vous-même" )
 			end
 		elseif not use_self_suffix or calling_ply ~= target_list[ i ] or anonymous then
 			table.insert( strs, target_list[ i ]:IsValid() and target_list[ i ]:Nick() or "(Console)" )
 		else
-			table.insert( strs, "Themself" )
+			table.insert( strs, "Eux-mêmes" )
 		end
 		table.insert( strs, default_color )
 		table.insert( strs, "," )
 	end
 
-	-- Remove last comma and coloring
+	-- Supprimer la dernière virgule et la coloration
 	table.remove( strs )
 	table.remove( strs )
 
@@ -443,7 +444,7 @@ function ulx.fancyLogAdmin( calling_ply, format, ... )
 
 	if hide_echo then
 		insertToAll( playerStrs, default_color )
-		insertToAll( playerStrs, "(SILENT) " )
+		insertToAll( playerStrs, "(silencieux) " )
 	end
 
 	local no_targets = false
