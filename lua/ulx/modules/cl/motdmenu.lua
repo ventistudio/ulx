@@ -167,17 +167,17 @@ local template_item_br = [[
 ]]
 
 local template_item_addon = [[
-						<li><b>%title%</b> by %author%</li>
+						<li><b>%title%</b> par %author%</li>
 ]]
 
 local template_item_workshop = [[
-						<li><b>%title%</b> - <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=%workshop_id%">View on Workshop</a></li>
+						<li><b>%title%</b> - <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=%workshop_id%">Voir le Workshop</a></li>
 ]]
 
 local template_footer = [[
 			</div>
 			<div class="footer">
-				<h3>Powered by ULX</h3>
+				<h3>Propulsé par VentiStudio</h3>
 			</div>
 		</div>
 	</body>
@@ -190,7 +190,7 @@ local template_error = [[
 	</head>
 	<body style="background-color: white">
 		<div class="footer">
-			<h3>ULX: MOTD Generator error. Could not parse settings file.</h3>
+			<h3>ULX: Erreur du générateur de MOTD. Impossible d’analyser le fichier de configuration.</h3>
 		</div>
 	</body>
 </html>
