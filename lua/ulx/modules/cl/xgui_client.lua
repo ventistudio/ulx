@@ -15,7 +15,7 @@ end
 --Set up various hooks modules can "hook" into.
 function xgui.hookEvent( dtype, event, func, name )
 	if not xgui.hook[dtype] or ( event and not xgui.hook[dtype][event] ) then
-		Msg( "XGUI: Attempted to add to invalid type or event to a hook! (" .. dtype .. ", " .. ( event or "nil" ) .. ")\n" )
+		Msg( "XGUI : Tentative d’ajout à un type ou événement invalide à un hook ! (" .. dtype .. ", " .. ( event or "nil" ) .. ")\n" )
 	else
 		if not name then name = "FixMe" .. math.floor(math.random()*10000) end -- Backwards compatibility for older XGUI modules
 		if not event then
