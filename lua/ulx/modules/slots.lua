@@ -1,9 +1,9 @@
-ulx.convar( "rslotsMode", "0", " - Sets the slots mode. See config for more information.", ULib.ACCESS_ADMIN )
-ulx.convar( "rslots", "2", " - Sets the number of reserved slots, only applicable for modes 1 and 2.", ULib.ACCESS_ADMIN )
-ulx.convar( "rslotsVisible", "1", " - Sets whether slots are visible. See config for more information.", ULib.ACCESS_ADMIN )
+ulx.convar( "rslotsMode", "0", " - Définit le mode des slots. Voir la configuration pour plus d'informations.", ULib.ACCESS_ADMIN )
+ulx.convar( "rslots", "2", " - Définit le nombre de slots réservés, applicable uniquement pour les modes 1 et 2.", ULib.ACCESS_ADMIN )
+ulx.convar( "rslotsVisible", "1", " - Définit si les slots sont visibles. Voir la configuration pour plus d'informations.", ULib.ACCESS_ADMIN )
 
 local access = "ulx reservedslots" -- Access string needed for reserved slots
-ULib.ucl.registerAccess( access, ULib.ACCESS_ADMIN, "Access to reserved slots", "Other" ) -- Give admins access to reserved slots by default
+ULib.ucl.registerAccess( access, ULib.ACCESS_ADMIN, "Accès aux slots réservés", "Autre" ) -- Give admins access to reserved slots by default
 
 function calcSlots( disconnect )
 	local mode = GetConVarNumber( "ulx_rslotsMode" )
@@ -76,7 +76,7 @@ local function playerAccess( ply )
 				return
 			end
 
-			ULib.kick( shortestply, "[ULX] Freeing slot. Sorry, you had the shortest connection time." )
+			ULib.kick( shortestply, "[ULX] Libération de slot. Désolé, vous aviez le temps de connexion le plus court." )
 		end
 
 		return
