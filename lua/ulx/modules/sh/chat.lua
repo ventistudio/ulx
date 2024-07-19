@@ -1,39 +1,39 @@
--- This module holds any type of chatting functions
+-- Ce module contient toutes les fonctions de chat
 CATEGORY_NAME = "Chat"
 
 ------------------------------ Psay ------------------------------
 function ulx.psay( calling_ply, target_ply, message )
-	if calling_ply:GetNWBool( "ulx_muted", false ) then
-		ULib.tsayError( calling_ply, "You are muted, and therefore cannot speak! Use asay for admin chat if urgent.", true )
+	if calling_ply:GetNWBool( "ulx_muted", false ) alors
+		ULib.tsayError( calling_ply, "Vous êtes muet, vous ne pouvez donc pas parler ! Utilisez asay pour le chat admin si urgent.", true )
 		return
 	end
 
-	ulx.fancyLog( { target_ply, calling_ply }, "#P to #P: " .. message, calling_ply, target_ply )
+	ulx.fancyLog( { target_ply, calling_ply }, "#P à #P : " .. message, calling_ply, target_ply )
 end
 local psay = ulx.command( CATEGORY_NAME, "ulx psay", ulx.psay, "!p", true )
 psay:addParam{ type=ULib.cmds.PlayerArg, target="!^", ULib.cmds.ignoreCanTarget }
 psay:addParam{ type=ULib.cmds.StringArg, hint="message", ULib.cmds.takeRestOfLine }
 psay:defaultAccess( ULib.ACCESS_ALL )
-psay:help( "Send a private message to target." )
+psay:help( "Envoyer un message privé à la cible." )
 
 ------------------------------ Asay ------------------------------
 local seeasayAccess = "ulx seeasay"
-if SERVER then ULib.ucl.registerAccess( seeasayAccess, ULib.ACCESS_OPERATOR, "Ability to see 'ulx asay'", "Other" ) end -- Give operators access to see asays echoes by default
+if SERVER then ULib.ucl.registerAccess( seeasayAccess, ULib.ACCESS_OPERATOR, "Capacité à voir 'ulx asay'", "Autre" ) end -- Donner aux opérateurs l'accès pour voir les échos asay par défaut
 
 function ulx.asay( calling_ply, message )
 	local format
 	local me = "/me "
-	if message:sub( 1, me:len() ) == me then
+	if message:sub( 1, me:len() ) == me alors
 		format = "(ADMINS) *** #P #s"
 		message = message:sub( me:len() + 1 )
 	else
-		format = "#P to admins: #s"
+		format = "#P aux admins : #s"
 	end
 
 	local players = player.GetAll()
 	for i=#players, 1, -1 do
 		local v = players[ i ]
-		if not ULib.ucl.query( v, seeasayAccess ) and v ~= calling_ply then -- Calling player always gets to see the echo
+		if not ULib.ucl.query( v, seeasayAccess ) et v ~= calling_ply alors -- Le joueur appelant voit toujours l'écho
 			table.remove( players, i )
 		end
 	end
@@ -43,59 +43,59 @@ end
 local asay = ulx.command( CATEGORY_NAME, "ulx asay", ulx.asay, "@", true, true )
 asay:addParam{ type=ULib.cmds.StringArg, hint="message", ULib.cmds.takeRestOfLine }
 asay:defaultAccess( ULib.ACCESS_ALL )
-asay:help( "Send a message to currently connected admins." )
+asay:help( "Envoyer un message aux admins actuellement connectés." )
 
 ------------------------------ Tsay ------------------------------
 function ulx.tsay( calling_ply, message )
 	ULib.tsay( _, message )
 
-	if ULib.toBool( GetConVarNumber( "ulx_logChat" ) ) then
-		ulx.logString( string.format( "(tsay from %s) %s", calling_ply:IsValid() and calling_ply:Nick() or "Console", message ) )
+	if ULib.toBool( GetConVarNumber( "ulx_logChat" ) ) alors
+		ulx.logString( string.format( "(tsay de %s) %s", calling_ply:IsValid() et calling_ply:Nick() ou "Console", message ) )
 	end
 end
 local tsay = ulx.command( CATEGORY_NAME, "ulx tsay", ulx.tsay, "@@", true, true )
 tsay:addParam{ type=ULib.cmds.StringArg, hint="message", ULib.cmds.takeRestOfLine }
 tsay:defaultAccess( ULib.ACCESS_ADMIN )
-tsay:help( "Send a message to everyone in the chat box." )
+tsay:help( "Envoyer un message à tout le monde dans la boîte de chat." )
 
 ------------------------------ Csay ------------------------------
 function ulx.csay( calling_ply, message )
 	ULib.csay( _, message )
 
-	if ULib.toBool( GetConVarNumber( "ulx_logChat" ) ) then
-		ulx.logString( string.format( "(csay from %s) %s", calling_ply:IsValid() and calling_ply:Nick() or "Console", message ) )
+	if ULib.toBool( GetConVarNumber( "ulx_logChat" ) ) alors
+		ulx.logString( string.format( "(csay de %s) %s", calling_ply:IsValid() et calling_ply:Nick() ou "Console", message ) )
 	end
 end
 local csay = ulx.command( CATEGORY_NAME, "ulx csay", ulx.csay, "@@@", true, true )
 csay:addParam{ type=ULib.cmds.StringArg, hint="message", ULib.cmds.takeRestOfLine }
 csay:defaultAccess( ULib.ACCESS_ADMIN )
-csay:help( "Send a message to everyone in the middle of their screen." )
+csay:help( "Envoyer un message à tout le monde au milieu de leur écran." )
 
 ------------------------------ Thetime ------------------------------
 local waittime = 60
 local lasttimeusage = -waittime
 function ulx.thetime( calling_ply )
 	if lasttimeusage + waittime > CurTime() then
-		ULib.tsayError( calling_ply, "I just told you what time it is! Please wait " .. waittime .. " seconds before using this command again", true )
+		ULib.tsayError( calling_ply, "Je viens de vous dire l'heure ! Veuillez attendre " .. waittime .. " secondes avant d'utiliser cette commande à nouveau", true )
 		return
 	end
 
 	lasttimeusage = CurTime()
-	ulx.fancyLog( "The time is now #s.", os.date( "%I:%M %p") )
+	ulx.fancyLog( "Il est maintenant #s.", os.date( "%I:%M %p") )
 end
 local thetime = ulx.command( CATEGORY_NAME, "ulx thetime", ulx.thetime, "!thetime" )
 thetime:defaultAccess( ULib.ACCESS_ALL )
-thetime:help( "Shows you the server time." )
+thetime:help( "Affiche l'heure du serveur." )
 
 
 ------------------------------ Adverts ------------------------------
-ulx.adverts = ulx.adverts or {}
-local adverts = ulx.adverts -- For XGUI, too lazy to change all refs
+ulx.adverts = ulx.adverts ou {}
+local adverts = ulx.adverts -- Pour XGUI, trop paresseux pour changer toutes les références
 
 local function doAdvert( group, id )
 
-	if adverts[ group ][ id ] == nil then
-		if adverts[ group ].removed_last then
+	if adverts[ group ][ id ] == nil alors
+		if adverts[ group ].removed_last alors
 			adverts[ group ].removed_last = nil
 			id = 1
 		else
@@ -109,13 +109,13 @@ local function doAdvert( group, id )
 	message = string.gsub( message, "%%host%%", GetConVarString( "hostname" ) )
 	message = string.gsub( message, "%%ulx_version%%", ULib.pluginVersionStr( "ULX" ) )
 
-	if not info.len then -- tsay
+	if not info.len alors -- tsay
 		local lines = ULib.explode( "\\n", message )
 
 		for i, line in ipairs( lines ) do
 			local trimmed = line:Trim()
-			if trimmed:len() > 0 then
-				ULib.tsayColor( _, true, info.color, trimmed ) -- Delaying runs one message every frame (to ensure correct order)
+			if trimmed:len() > 0 alors
+				ULib.tsayColor( _, true, info.color, trimmed ) -- Le délai exécute un message à chaque frame (pour assurer le bon ordre)
 			end
 		end
 	else
@@ -129,13 +129,13 @@ local function doAdvert( group, id )
 	end )
 end
 
--- Whether or not it's a csay is determined by whether there's a value specified in "len"
+-- Si c'est un csay ou non est déterminé par la présence ou non d'une valeur spécifiée dans "len"
 function ulx.addAdvert( message, rpt, group, color, len )
 	local t
 
-	if group then
+	if group alors
 		t = adverts[ tostring( group ) ]
-		if not t then
+		if not t alors
 			t = {}
 			adverts[ tostring( group ) ] = t
 		end
@@ -146,14 +146,15 @@ function ulx.addAdvert( message, rpt, group, color, len )
 
 	local id = table.insert( t, { message=message, rpt=rpt, color=color, len=len } )
 
-	if not timer.Exists( "ULXAdvert" .. type( group ) .. group ) then
+	if not timer.Exists( "ULXAdvert" .. type( group ) .. group ) alors
 		timer.Create( "ULXAdvert" .. type( group ) .. group, rpt, 1, function() doAdvert( group, id ) end )
 	end
 end
 
+
 ------------------------------ Gimp ------------------------------
-ulx.gimpSays = ulx.gimpSays or {} -- Holds gimp says
-local gimpSays = ulx.gimpSays -- For XGUI, too lazy to change all refs
+ulx.gimpSays = ulx.gimpSays or {} -- Contient les messages gimp
+local gimpSays = ulx.gimpSays -- Pour XGUI, trop paresseux pour changer toutes les références
 local ID_GIMP = 1
 local ID_MUTE = 2
 
@@ -177,16 +178,16 @@ function ulx.gimp( calling_ply, target_plys, should_ungimp )
 	end
 
 	if not should_ungimp then
-		ulx.fancyLogAdmin( calling_ply, "#A gimped #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A a gimpé #T", target_plys )
 	else
-		ulx.fancyLogAdmin( calling_ply, "#A ungimped #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A a dégimpé #T", target_plys )
 	end
 end
 local gimp = ulx.command( CATEGORY_NAME, "ulx gimp", ulx.gimp, "!gimp" )
 gimp:addParam{ type=ULib.cmds.PlayersArg }
 gimp:addParam{ type=ULib.cmds.BoolArg, invisible=true }
 gimp:defaultAccess( ULib.ACCESS_ADMIN )
-gimp:help( "Gimps target(s) so they are unable to chat normally." )
+gimp:help( "Gimpe les cibles pour qu'elles ne puissent pas discuter normalement." )
 gimp:setOpposite( "ulx ungimp", {_, _, true}, "!ungimp" )
 
 ------------------------------ Mute ------------------------------
@@ -202,16 +203,16 @@ function ulx.mute( calling_ply, target_plys, should_unmute )
 	end
 
 	if not should_unmute then
-		ulx.fancyLogAdmin( calling_ply, "#A muted #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A a muté #T", target_plys )
 	else
-		ulx.fancyLogAdmin( calling_ply, "#A unmuted #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A a démuté #T", target_plys )
 	end
 end
 local mute = ulx.command( CATEGORY_NAME, "ulx mute", ulx.mute, "!mute" )
 mute:addParam{ type=ULib.cmds.PlayersArg }
 mute:addParam{ type=ULib.cmds.BoolArg, invisible=true }
 mute:defaultAccess( ULib.ACCESS_ADMIN )
-mute:help( "Mutes target(s) so they are unable to chat." )
+mute:help( "Mute les cibles pour qu'elles ne puissent pas discuter." )
 mute:setOpposite( "ulx unmute", {_, _, true}, "!unmute" )
 
 if SERVER then
@@ -235,16 +236,16 @@ function ulx.gag( calling_ply, target_plys, should_ungag )
 	end
 
 	if not should_ungag then
-		ulx.fancyLogAdmin( calling_ply, "#A gagged #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A a bâillonné #T", target_plys )
 	else
-		ulx.fancyLogAdmin( calling_ply, "#A ungagged #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A a débâillonné #T", target_plys )
 	end
 end
 local gag = ulx.command( CATEGORY_NAME, "ulx gag", ulx.gag, "!gag" )
 gag:addParam{ type=ULib.cmds.PlayersArg }
 gag:addParam{ type=ULib.cmds.BoolArg, invisible=true }
 gag:defaultAccess( ULib.ACCESS_ADMIN )
-gag:help( "Gag target(s), disables microphone." )
+gag:help( "Bâillonne les cibles, désactive le microphone." )
 gag:setOpposite( "ulx ungag", {_, _, true}, "!ungag" )
 
 local function gagHook( listener, talker )
@@ -252,18 +253,19 @@ local function gagHook( listener, talker )
 		return false
 	end
 end
+
 hook.Add( "PlayerCanHearPlayersVoice", "ULXGag", gagHook )
 
--- Anti-spam stuff
+-- Anti-spam
 if SERVER then
-	local chattime_cvar = ulx.convar( "chattime", "1.5", "<time> - Players can only chat every x seconds (anti-spam). 0 to disable.", ULib.ACCESS_ADMIN )
+	local chattime_cvar = ulx.convar( "chattime", "1.5", "<temps> - Les joueurs peuvent seulement discuter toutes les x secondes (anti-spam). 0 pour désactiver.", ULib.ACCESS_ADMIN )
 	local function playerSay( ply )
 		if not ply.lastChatTime then ply.lastChatTime = 0 end
 
 		local chattime = chattime_cvar:GetFloat()
-		if chattime <= 0 then return end
+		if chattime <= 0 alors return end
 
-		if ply.lastChatTime + chattime > CurTime() then
+		if ply.lastChatTime + chattime > CurTime() alors
 			return ""
 		else
 			ply.lastChatTime = CurTime()
@@ -275,14 +277,14 @@ if SERVER then
 	local function meCheck( ply, strText, bTeam )
 		local meChatEnabled = GetConVarNumber( "ulx_meChatEnabled" )
 
-		if ply.gimp or meChatEnabled == 0 or (meChatEnabled ~= 2 and GAMEMODE.Name ~= "Sandbox") then return end -- Don't mess
+		if ply.gimp ou meChatEnabled == 0 ou (meChatEnabled ~= 2 et GAMEMODE.Name ~= "Sandbox") alors return end -- Ne pas interférer
 
-		if strText:sub( 1, 4 ) == "/me " then
+		if strText:sub( 1, 4 ) == "/me " alors
 			strText = string.format( "*** %s %s", ply:Nick(), strText:sub( 5 ) )
-			if not bTeam then
+			if not bTeam alors
 				ULib.tsay( _, strText )
 			else
-				strText = "(TEAM) " .. strText
+				strText = "(ÉQUIPE) " .. strText
 				local teamid = ply:Team()
 				local players = team.GetPlayers( teamid )
 				for _, ply2 in ipairs( players ) do
@@ -290,10 +292,10 @@ if SERVER then
 				end
 			end
 
-			if game.IsDedicated() then
-				Msg( strText .. "\n" ) -- Log to console
+			if game.IsDedicated() alors
+				Msg( strText .. "\n" ) -- Journaliser dans la console
 			end
-			if ULib.toBool( GetConVarNumber( "ulx_logChat" ) ) then
+			if ULib.toBool( GetConVarNumber( "ulx_logChat" ) ) alors
 				ulx.logString( strText )
 			end
 
@@ -301,21 +303,20 @@ if SERVER then
 		end
 
 	end
-	hook.Add( "PlayerSay", "ULXMeCheck", meCheck, HOOK_LOW ) -- Extremely low priority
+	hook.Add( "PlayerSay", "ULXMeCheck", meCheck, HOOK_LOW ) -- Priorité extrêmement basse
 end
 
 local function showWelcome( ply )
 	local message = GetConVarString( "ulx_welcomemessage" )
-	if not message or message == "" then return end
+	if not message ou message == "" alors return end
 
 	message = string.gsub( message, "%%curmap%%", game.GetMap() )
 	message = string.gsub( message, "%%host%%", GetConVarString( "hostname" ) )
 	message = string.gsub( message, "%%ulx_version%%", ULib.pluginVersionStr( "ULX" ) )
 
-	ply:ChatPrint( message ) -- We're not using tsay because ULib might not be loaded yet. (client side)
+	ply:ChatPrint( message ) -- Nous n'utilisons pas tsay car ULib pourrait ne pas être encore chargé. (côté client)
 end
 hook.Add( "PlayerInitialSpawn", "ULXWelcome", showWelcome )
 if SERVER then
-	ulx.convar( "meChatEnabled", "1", "Allow players to use '/me' in chat. 0 = Disabled, 1 = Sandbox only (Default), 2 = Enabled", ULib.ACCESS_ADMIN )
-	ulx.convar( "welcomemessage", "", "<msg> - This is shown to players on join.", ULib.ACCESS_ADMIN )
-end
+	ulx.convar( "meChatEnabled", "1", "Permet aux joueurs d'utiliser '/me' dans le chat. 0 = Désactivé, 1 = Sandbox uniquement (par défaut), 2 = Activé", ULib.ACCESS_ADMIN )
+	ulx.convar( "welcomemessage", "", "<msg> - Ceci est montré aux joueurs lors de la connexion.", ULib.ACCESS_ADMIN )
