@@ -48,7 +48,7 @@ for _, file in ipairs( file.Find( "ulx/xgui/server/*.lua", "LUA" ) ) do
 	include( "ulx/xgui/server/" .. file )
 	Msg( "//  " .. file .. string.rep( " ", 25 - file:len() ) .. "//\n" )
 end
-Msg( "// XGUI modules added!       //\n" )
+Msg( "// Traduit par VentiSutdio   //\n" )
 Msg( "///////////////////////////////\n" )
 
 function xgui.init()
