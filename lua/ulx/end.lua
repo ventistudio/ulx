@@ -42,22 +42,23 @@ local function doAdvertCfg( path, noMount )
 	end
 
 	local data_root, err = ULib.parseKeyValues( ULib.stripComments( ULib.fileRead( path, noMount ), ";" ) )
-	if not data_root then Msg( "[ULX] Error in advert config: " .. err .. "\n" ) return end
+	if not data_root then Msg( "[ULX] Erreur dans la configuration de l'annonce : " .. err .. "\n" ) return end
 
 	for group_name, row in pairs( data_root ) do
-		if type( group_name ) == "number" then -- Must not be a group
+		if type( group_name ) == "number" then -- Ne doit pas être un groupe
 			local color = Color( tonumber( row.red ) or ULib.DEFAULT_TSAY_COLOR.r, tonumber( row.green ) or ULib.DEFAULT_TSAY_COLOR.g, tonumber( row.blue ) or ULib.DEFAULT_TSAY_COLOR.b )
-			ulx.addAdvert( row.text or "NO TEXT SUPPLIED FOR THIS ADVERT", tonumber( row.time ) or 300, _, color, tonumber( row.time_on_screen ) )
-		else -- Must be a group
-			if type( row ) ~= "table" then Msg( "[ULX] Error in advert config: Adverts are not properly formatted!\n" ) return end
+			ulx.addAdvert( row.text or "AUCUN TEXTE FOURNI POUR CETTE ANNONCE", tonumber( row.time ) or 300, _, color, tonumber( row.time_on_screen ) )
+		else -- Doit être un groupe
+			if type( row ) ~= "table" then Msg( "[ULX] Erreur dans la configuration de l'annonce : Les annonces ne sont pas correctement formatées !\n" ) return end
 			for i=1, #row do
 				local row2 = row[ i ]
 				local color = Color( tonumber( row2.red ) or 151, tonumber( row2.green ) or 211, tonumber( row2.blue ) or 255 )
-				ulx.addAdvert( row2.text or "NO TEXT SUPPLIED FOR THIS ADVERT", tonumber( row2.time ) or 300, group_name, color, tonumber( row2.time_on_screen ) )
+				ulx.addAdvert( row2.text or "AUCUN TEXTE FOURNI POUR CETTE ANNONCE", tonumber( row2.time ) or 300, group_name, color, tonumber( row2.time_on_screen ) )
 			end
 		end
 	end
 end
+
 
 local function doVotemapsCfg( path, noMount )
 	-- Does the module exist for this?
@@ -97,7 +98,7 @@ local function doMotdCfg( path, noMount )
 	end
 
 	local data_root, err = ULib.parseKeyValues( ULib.stripComments( ULib.fileRead( path, noMount ), ";" ) )
-	if not data_root then Msg( "[ULX] Error in motd config: " .. err .. "\n" ) return end
+	if not data_root then Msg( "[ULX] Erreur dans la configuration du motd : " .. err .. "\n" ) return end
 
 	ulx.motdSettings = data_root
 	ulx.populateMotdData()
