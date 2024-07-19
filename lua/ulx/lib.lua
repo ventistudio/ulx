@@ -8,9 +8,9 @@ function ulx.getExclusive( target, ply )
 	if not target.ULXExclusive then return end
 
 	if target == ply then
-		return "You are " .. target.ULXExclusive .. "!"
+		return "Vous êtes " .. target.ULXExclusive .. "!"
 	else
-		return target:Nick() .. " is " .. target.ULXExclusive .. "!"
+		return target:Nick() .. " est " .. target.ULXExclusive .. "!"
 	end
 end
 
@@ -72,7 +72,7 @@ local function advertiseNewVersions( ply )
 			end
 		end
 		if #updatesFor > 0 then
-			ULib.tsay( ply, "[ULX] Updates available for " .. string.Implode( ", ", updatesFor ) )
+			ULib.tsay( ply, "[ULX] Mises à jour disponibles pour " .. string.Implode( ", ", updatesFor ) )
 		end
 		ply.ULX_UpdatesAdvertised = true
 	end
