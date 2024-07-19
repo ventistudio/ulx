@@ -3,32 +3,31 @@
 local files = {}
 
 files["adverts.txt"] =
-[[; Here's where you put advertisements
+[[; Voici où vous mettez les annonces
 ;
-; Whether an advertisement is a center advertisement (csay) or text box advertisement (tsay) is determined by
-; whether or not the "time_on_screen" key is present. If it is present, it's a csay.
+; Si une annonce est une annonce centrale (csay) ou une annonce en boîte de texte (tsay) est déterminé par
+; la présence ou non de la clé "time_on_screen". Si elle est présente, c'est un csay.
 ;
-; The 'time' argument inside a center advertisement and the number following a chat advertisement are the
-; time it takes between each showing of this advertisement in seconds. Set it to 300 and the advertisement
-; will show every five minutes.
+; L'argument 'time' à l'intérieur d'une annonce centrale et le nombre suivant une annonce de chat sont le
+; temps entre chaque affichage de cette annonce en secondes. Réglez-le sur 300 et l'annonce apparaîtra toutes les cinq minutes.
 ;
-; If you want to make it so that one advertisement is shown and then will always be followed by another,
-; put them in a table. For example, if you add the following to the bottom of the file, A will always show
-; first followed by B.
-; "my_group"
+; Si vous voulez qu'une annonce soit toujours suivie par une autre,
+; mettez-les dans une table. Par exemple, si vous ajoutez ce qui suit en bas du fichier, A apparaîtra toujours
+; en premier suivi de B.
+; "mon_groupe"
 ; {
 ;     {
-;         "text" "Advertisement A"
+;         "text" "Annonce A"
 ;         "time" "200"
 ;     }
 ;     {
-;         "text" "Advertisement B"
+;         "text" "Annonce B"
 ;         "time" "300"
 ;     }
 ; }
 
 {
-	"text" "You're playing on %host%, enjoy your stay!"
+	"text" "Vous jouez sur %host%, profitez de votre séjour !"
 	"red" "100"
 	"green" "255"
 	"blue" "200"
@@ -36,176 +35,174 @@ files["adverts.txt"] =
 	"time" "300"
 }
 {
-	"text" "This server is running ULX Admin Mod %ulx_version% by Team Ulysses from ulyssesmod.net"
+	"text" "Ce serveur utilise ULX Admin Mod %ulx_version% par Team Ulysses de ulyssesmod.net"
 	"time" "635"
 }
 ]]
 
-files["banmessage.txt"] = [[
-; Possible variables here are as follows:
-; {{BANNED_BY}} - The person (and steamid) who initiated the ban
-; {{BAN_START}} - The date/time of the ban, in the server's time zone
-; {{REASON}} - The ban reason
-; {{TIME_LEFT}} - The time left in the ban
-; {{STEAMID}} - The banned player's Steam ID (excluding non-number characters)
-; {{STEAMID64}} - The banned player's 64-bit Steam ID
-; The two steam ID variables are useful for constructing URLs for appealing bans
--------===== [ BANNED ] =====-------
+files["banmessage.txt"] = 
+[[; Les variables possibles ici sont les suivantes :
+; {{BANNED_BY}} - La personne (et steamid) qui a initié le bannissement
+; {{BAN_START}} - La date/heure du bannissement, dans le fuseau horaire du serveur
+; {{REASON}} - La raison du bannissement
+; {{TIME_LEFT}} - Le temps restant du bannissement
+; {{STEAMID}} - L'ID Steam du joueur banni (excluant les caractères non numériques)
+; {{STEAMID64}} - L'ID Steam 64 bits du joueur banni
+; Les deux variables d'ID Steam sont utiles pour construire des URL pour faire appel des bannissements
+-------===== [ BANNI ] =====-------
 
----= Reason =---
+---= Raison =---
 {{REASON}}
 
----= Time Left =---
+---= Temps restant =---
 {{TIME_LEFT}}
 ]]
 
-
 files["banreasons.txt"] =
-[[; This file is used to store default reasons for kicking and banning users.
-; These reasons show up in console autocomplete and in XGUI dropdowns.
-Spammer
-Crashed server
+[[; Ce fichier est utilisé pour stocker les raisons par défaut pour expulser et bannir les utilisateurs.
+; Ces raisons apparaissent dans l'autocomplétion de la console et dans les menus déroulants de XGUI.
+Spam
+Serveur crashé
 Minge
 Griefer
-Foul language
-Disobeying the rules
+Langage grossier
+Non-respect des règles
 ]]
 
 files["config.txt"] =
-[[;Any of the settings in here can be added to the per-map or per-gamemode configs.
-;To add per-map and per-gamemode configs, create data/ulx/maps/<mapname>/config.txt
-;and data/ulx/gamemodes/<gamemodename>/config.txt files. This can also be done for
-;All other configuration files (adverts.txt, downloads.txt, gimps.txt, votemaps.txt)
-;All configurations add to each other except gimps and votemaps, which takes the most
-;specific config only.
-;Any line starting with a ';' is a comment!
+[[; Tous les paramètres ici peuvent être ajoutés aux configurations par carte ou par mode de jeu.
+; Pour ajouter des configurations par carte et par mode de jeu, créez les fichiers data/ulx/maps/<nomdelacarte>/config.txt
+; et data/ulx/gamemodes/<nomdumode>/config.txt. Cela peut également être fait pour
+; tous les autres fichiers de configuration (adverts.txt, downloads.txt, gimps.txt, votemaps.txt).
+; Toutes les configurations s'ajoutent les unes aux autres sauf gimps et votemaps, qui prennent uniquement la configuration la plus
+; spécifique.
+; Toute ligne commençant par un ';' est un commentaire !
 
-ulx showMotd 2 ; MOTD mode
-; MOTD modes:
-; 0 - OFF No MOTD shown
-; 1 - FILE Show the players the contents of the file from the 'motdfile' cvar
-; 2 - GENERATOR Uses the MOTD generator to create a MOTD for the player (use XGUI for this)
-; 3 - URL Show the player the URL specified by the 'motdurl' cvar
-; In a URL, you can use %curmap% and %steamid% in the URL to have it automagically parsed for you (eg, server.com/?map=%curmap%&id=%steamid%).
-ulx motdfile ulx_motd.txt ; The MOTD to show, if using a file. Put this file in the root of the garry's mod directory.
-ulx motdurl ulyssesmod.net ; The MOTD to show, if using a URL.
-
-
-ulx chattime 0 ; Players can only chat every x seconds (anti-spam). 0 to disable
-ulx meChatEnabled 1 ; Allow players to use '/me' in chat. 0 = Disabled, 1 = Sandbox only (Default), 2 = Enabled
+ulx showMotd 2 ; Mode MOTD
+; Modes MOTD :
+; 0 - OFF Aucun MOTD affiché
+; 1 - FILE Affiche aux joueurs le contenu du fichier spécifié par la variable 'motdfile'
+; 2 - GENERATOR Utilise le générateur de MOTD pour créer un MOTD pour le joueur (utilisez XGUI pour cela)
+; 3 - URL Affiche l'URL spécifiée par la variable 'motdurl'
+; Dans une URL, vous pouvez utiliser %curmap% et %steamid% pour qu'ils soient automatiquement analysés pour vous (par exemple, server.com/?map=%curmap%&id=%steamid%).
+ulx motdfile ulx_motd.txt ; Le MOTD à afficher, si vous utilisez un fichier. Mettez ce fichier à la racine du répertoire de Garry's Mod.
+ulx motdurl ulyssesmod.net ; Le MOTD à afficher, si vous utilisez une URL.
 
 
-; This is what the players will see when they join, set it to "" to disable.
-; You can use %host% and %curmap% in your text and have it automagically parsed for you
-ulx welcomemessage "Welcome to %host%! We're playing %curmap%."
+ulx chattime 0 ; Les joueurs ne peuvent discuter que toutes les x secondes (anti-spam). 0 pour désactiver
+ulx meChatEnabled 1 ; Permet aux joueurs d'utiliser '/me' dans le chat. 0 = Désactivé, 1 = Sandbox uniquement (par défaut), 2 = Activé
 
 
-ulx logFile 1 ; Log to file (Can still echo if off). This is a global setting, nothing will be logged to file with this off.
-ulx logEvents 1 ; Log events (player connect, disconnect, death)
-ulx logChat 1 ; Log player chat
-ulx logSpawns 1 ; Log when players spawn objects (props, effects, etc)
-ulx logSpawnsEcho 1 ; Echo spawns to players in server. -1 = Off, 0 = Dedicated console only, 1 = Admins only, 2 = All players. (Echoes to console)
-ulx logJoinLeaveEcho 1 ; Echo players leaves and joins to admins in the server (useful for banning minges)
-ulx logDir "ulx_logs" ; The log dir under garrysmod/data
-ulx logEcho 1 ; Echo mode
-; Echo modes:
-; 0 - OFF No output to any players when an admin command is used
-; 1 - ANONYMOUS Output to players without access to see who used the command (admins by default) similar to "(Someone) slapped Bob with 0 damage"
-; 2 - FULL Output to players similar to "Foo slapped Bob with 0 damage"
+; Voici ce que les joueurs verront lorsqu'ils rejoindront, mettez-le à "" pour désactiver.
+; Vous pouvez utiliser %host% et %curmap% dans votre texte pour qu'ils soient automatiquement analysés pour vous
+ulx welcomemessage "Bienvenue sur %host%! Nous jouons à %curmap%."
 
-ulx logEchoColors 1 ; Whether or not echoed commands in chat are colored
-ulx logEchoColorDefault "151 211 255" ; The default text color (RGB)
-ulx logEchoColorConsole "0 0 0" ; The color that Console gets when using actions
-ulx logEchoColorSelf "75 0 130" ; The color for yourself in echoes
-ulx logEchoColorEveryone "0 128 128" ; The color to use when everyone is targeted in echoes
-ulx logEchoColorPlayerAsGroup 1 ; Whether or not to use group colors for players. If false, it uses the color below.
-ulx logEchoColorPlayer "255 255 0" ; The color to use for players when ulx logEchoColorPlayerAsGroup is set to 0.
-ulx logEchoColorMisc "0 255 0" ; The color for anything else in echoes
+
+ulx logFile 1 ; Journaliser dans un fichier (peut toujours écho si désactivé). C'est un paramètre global, rien ne sera journalisé dans un fichier si désactivé.
+ulx logEvents 1 ; Journaliser les événements (connexion, déconnexion, mort des joueurs)
+ulx logChat 1 ; Journaliser le chat des joueurs
+ulx logSpawns 1 ; Journaliser lorsque les joueurs font apparaître des objets (props, effets, etc.)
+ulx logSpawnsEcho 1 ; Écho des apparitions aux joueurs sur le serveur. -1 = Désactivé, 0 = Console dédiée uniquement, 1 = Admins uniquement, 2 = Tous les joueurs. (Écho à la console)
+ulx logJoinLeaveEcho 1 ; Écho des départs et arrivées des joueurs aux admins sur le serveur (utile pour bannir les minges)
+ulx logDir "ulx_logs" ; Le répertoire des journaux sous garrysmod/data
+ulx logEcho 1 ; Mode écho
+; Modes écho :
+; 0 - OFF Aucun affichage aux joueurs lorsqu'une commande admin est utilisée
+; 1 - ANONYMOUS Affichage aux joueurs sans accès pour voir qui a utilisé la commande (admins par défaut) similaire à "(Quelqu'un) a giflé Bob avec 0 dégâts"
+; 2 - FULL Affichage aux joueurs similaire à "Foo a giflé Bob avec 0 dégâts"
+
+ulx logEchoColors 1 ; Si les commandes écho dans le chat sont colorées ou non
+ulx logEchoColorDefault "151 211 255" ; La couleur de texte par défaut (RGB)
+ulx logEchoColorConsole "0 0 0" ; La couleur que la Console obtient lors de l'utilisation des actions
+ulx logEchoColorSelf "75 0 130" ; La couleur pour vous-même dans les échos
+ulx logEchoColorEveryone "0 128 128" ; La couleur à utiliser lorsque tout le monde est ciblé dans les échos
+ulx logEchoColorPlayerAsGroup 1 ; Si les couleurs de groupe sont utilisées pour les joueurs. Si faux, utilise la couleur ci-dessous.
+ulx logEchoColorPlayer "255 255 0" ; La couleur à utiliser pour les joueurs lorsque ulx logEchoColorPlayerAsGroup est réglé sur 0.
+ulx logEchoColorMisc "0 255 0" ; La couleur pour tout le reste dans les échos
 
 ulx rslotsMode 0
 ulx rslots 2
-ulx rslotsVisible 1 ; When this is 0, sv_visiblemaxplayers will be set to maxplayers - slots_currently_reserved
-;Modes:
-;0 - Off
-;1 - Keep # of slots reserved for admins, admins fill slots.
-;2 - Keep # of slots reserved for admins, admins don't fill slots, they'll be freed when a player leaves.
-;3 - Always keep 1 slot open for admins, kick the user with the shortest connection time if an admin joins.
+ulx rslotsVisible 1 ; Lorsque ceci est réglé sur 0, sv_visiblemaxplayers sera réglé sur maxplayers - slots_currently_reserved
+;Modes :
+;0 - Désactivé
+;1 - Garder # de slots réservés pour les admins, les admins remplissent les slots.
+;2 - Garder # de slots réservés pour les admins, les admins ne remplissent pas les slots, ils seront libérés lorsqu'un joueur quitte.
+;3 - Toujours garder 1 slot ouvert pour les admins, expulser l'utilisateur avec le temps de connexion le plus court si un admin rejoint.
 
-;Difference between 1 and 2:
-;I realize it's a bit confusing, so here's an example.
-;On mode 1--
-;	You have maxplayers set to 10, rslots set to 2, and there are currently 8 non-admins connected.
-;	If a non-admin tries to join, they'll be kicked to keep the reserved slots open. Two admins join
-;	and fill the two reserved slots. When non-admins leave, the two admins will still be filling the
-;	two reserved slots, so another regular player can join and fill the server up again without being
-;	kicked by the slots system
+;Différence entre 1 et 2 :
+;Je réalise que c'est un peu confus, alors voici un exemple.
+;En mode 1--
+;	Vous avez maxplayers réglé sur 10, rslots réglé sur 2, et il y a actuellement 8 non-admins connectés.
+;	Si un non-admin essaie de rejoindre, il sera expulsé pour garder les slots réservés ouverts. Deux admins rejoignent
+;	et remplissent les deux slots réservés. Lorsque les non-admins quittent, les deux admins rempliront toujours les
+;	deux slots réservés, donc un autre joueur régulier peut rejoindre et remplir le serveur à nouveau sans être
+;	expulsé par le système de slots.
 
-;On mode 2--
-;	Same setup as mode 1, you have the two admins in the server and the server is full. Now, when a
-;	non-admin leaves the server, reserved slots will pick up the slot again as reserved. If a regular
-;	player tries to join and fill the server again, even though there are two admins connected, it will
-;	kick the regular player to keep the slot open
+;En mode 2--
+;	Même configuration que le mode 1, vous avez les deux admins dans le serveur et le serveur est plein. Maintenant, lorsqu'un
+;	non-admin quitte le serveur, les slots réservés reprendront le slot à nouveau comme réservé. Si un joueur régulier
+;	essaie de rejoindre et de remplir le serveur à nouveau, même s'il y a deux admins connectés, il expulsera
+;	le joueur régulier pour garder le slot ouvert.
 
-;So, the basic difference between these two is mode 1 will subtract currently connected admins from the slot
-;pool, while mode 2 while always be attempting to reclaim slots if it doesn't currently have enough when
-;players leave no matter how many admins are connected.
+;Donc, la différence de base entre ces deux modes est que le mode 1 soustraira les admins actuellement connectés de la
+;pool de slots, tandis que le mode 2 tentera toujours de récupérer les slots s'il n'en a pas assez lorsque
+;les joueurs quittent, peu importe combien d'admins sont connectés.
 
-;rslotsVisible:
-;	If you set this variable to 0, ULX will automatically change sv_visiblemaxplayers for you so that if
-;	there are no regular player slots available in your server, it will appear that the server is full.
-;	The major downside to this is that admins can't connect to the server using the "find server" dialog
-;	when it appears full. Instead, they have to go to console and use the command "connect <ip>".
-;	NOTE THIS DOES NOT CHANGE YOUR MAXPLAYERS VARIABLE, ONLY HOW MANY MAXPLAYERS IT _LOOKS_ LIKE YOUR
-;	SERVER HAS. YOU CAN NEVER, EVER HAVE MORE PLAYERS IN YOUR SERVER THAN THE MAXPLAYERS VARIABLE.
+;rslotsVisible :
+;	Si vous réglez cette variable sur 0, ULX changera automatiquement sv_visiblemaxplayers pour vous afin que s'il
+;	n'y a pas de slots de joueur régulier disponibles dans votre serveur, il apparaîtra que le serveur est plein.
+;	L'inconvénient majeur de cela est que les admins ne peuvent pas se connecter au serveur en utilisant la boîte de dialogue "trouver serveur"
+;	lorsqu'il apparaît plein. Au lieu de cela, ils doivent aller à la console et utiliser la commande "connect <ip>".
+;	NOTEZ QUE CELA NE CHANGE PAS VOTRE VARIABLE MAXPLAYERS, SEULEMENT COMBIEN DE MAXPLAYERS IL _SEMBLE_ QUE VOTRE
+;	SERVEUR A. VOUS NE POUVEZ JAMAIS, JAMAIS AVOIR PLUS DE JOUEURS DANS VOTRE SERVEUR QUE LA VARIABLE MAXPLAYERS.
 
+ulx votemapEnabled 1 ; Activer/Désactiver la commande de vote de carte
+ulx votemapMintime 10 ; Temps après le changement de carte avant que les votes ne comptent.
+ulx votemapWaittime 5 ; Temps avant qu'un utilisateur ne puisse changer son vote.
+ulx votemapSuccessratio 0.4 ; Ratio de (votes pour la carte)/(joueurs totaux) nécessaire pour changer de carte. (Arrondi au supérieur)
+ulx votemapMinvotes 3 ; Nombre minimum de votes nécessaires pour changer de carte (Empêche les abus). Cela remplace la convar ci-dessus sur les petits serveurs.
+ulx votemapVetotime 30 ; Temps en secondes qu'un admin a après un vote de carte réussi pour opposer son veto. Réglez sur 0 pour désactiver.
+ulx votemapMapmode 1 ; 1 = Utiliser toutes les cartes sauf celles spécifiées dans votemaps.txt, 2 = Utiliser uniquement les cartes spécifiées dans votemaps.txt.
 
+ulx voteEcho 0 ; 1 = Écho de ce que chaque joueur vote (cela ne s'applique pas au vote de carte). 0 = Pas d'écho
 
-ulx votemapEnabled 1 ; Enable/Disable the entire votemap command
-ulx votemapMintime 10 ; Time after map change before votes count.
-ulx votemapWaittime 5 ; Time before a user must wait before they can change their vote.
-ulx votemapSuccessratio 0.4 ; Ratio of (votes for map)/(total players) needed to change map. (Rounds up)
-ulx votemapMinvotes 3 ; Number of minimum votes needed to change map (Prevents llamas). This supersedes the above convar on small servers.
-ulx votemapVetotime 30 ; Time in seconds an admin has after a successful votemap to veto the vote. Set to 0 to disable.
-ulx votemapMapmode 1 ; 1 = Use all maps but what's specified in votemaps.txt, 2 = Use only the maps specified in votemaps.txt.
+ulx votemap2Successratio 0.5 ; Ratio de (votes pour la carte)/(joueurs totaux) nécessaire pour changer de carte. (Arrondi au supérieur)
+ulx votemap2Minvotes 3 ; Nombre minimum de votes nécessaires pour changer de carte (Empêche les abus). Cela remplace la convar ci-dessus sur les petits serveurs.
 
-ulx voteEcho 0 ; 1 = Echo what every player votes (this does not apply to votemap). 0 = Don't echo
+ulx votekickSuccessratio 0.6 ; Ratio de (votes pour expulsion)/(joueurs totaux) nécessaire pour expulser un joueur. (Arrondi au supérieur)
+ulx votekickMinvotes 2 ; Nombre minimum de votes nécessaires pour expulser un joueur (Empêche les abus). Cela remplace la convar ci-dessus sur les petits serveurs.
 
-ulx votemap2Successratio 0.5 ; Ratio of (votes for map)/(total players) needed to change map. (Rounds up)
-ulx votemap2Minvotes 3 ; Number of minimum votes needed to change map (Prevents llamas). This supersedes the above convar on small servers.
+ulx votebanSuccessratio 0.7 ; Ratio de (votes pour bannissement)/(joueurs totaux) nécessaire pour bannir un joueur. (Arrondi au supérieur)
+ulx votebanMinvotes 3 ; Nombre minimum de votes nécessaires pour bannir un joueur (Empêche les abus). Cela remplace la convar ci-dessus sur les petits serveurs.]]
 
-ulx votekickSuccessratio 0.6 ; Ratio of (votes for kick)/(total players) needed to kick player. (Rounds up)
-ulx votekickMinvotes 2 ; Number of minimum votes needed to kick player (Prevents llamas). This supersedes the above convar on small servers.
-
-ulx votebanSuccessratio 0.7 ; Ratio of (votes for ban)/(total players) needed to ban player. (Rounds up)
-ulx votebanMinvotes 3 ; Number of minimum votes needed to ban player (Prevents llamas). This supersedes the above convar on small servers.
-]]
 
 files["downloads.txt"] =
-[[; You can add forced downloads here. Add as many as you want, one file or
-; folder per line. You can also add these to your map- or game-specific files.
-; You can add a folder to add all files inside that folder recursively.
-; Any line starting with ';' is a comment and WILL NOT be processed!!!
-; Examples:
-;sound/cheeseman.mp3 <-- Adds the file 'cheeseman.mp3' under the sound folder
-;sound/my_music <-- Adds all files within the my_music folder, inside the sound folder
+[[; Vous pouvez ajouter des téléchargements forcés ici. Ajoutez autant que vous voulez, un fichier ou
+; dossier par ligne. Vous pouvez également les ajouter à vos fichiers spécifiques à une carte ou à un jeu.
+; Vous pouvez ajouter un dossier pour ajouter tous les fichiers à l'intérieur de ce dossier de manière récursive.
+; Toute ligne commençant par ';' est un commentaire et NE SERA PAS traitée !!!
+; Exemples :
+;sound/cheeseman.mp3 <-- Ajoute le fichier 'cheeseman.mp3' dans le dossier sound
+;sound/my_music <-- Ajoute tous les fichiers dans le dossier my_music, à l'intérieur du dossier sound
 ]]
 
 files["gimps.txt"] =
-[[; Add gimp says in this file, one per line.
-; Any line starting with a ';' is a comment
-I'm a llama.
-How do you fly?
+[[; Ajoutez des phrases gimp dans ce fichier, une par ligne.
+; Toute ligne commençant par un ';' est un commentaire
+Je suis un lama.
+Comment tu voles ?
 baaaaaaaaaah.
-Llama power!
-Llamas are the coolest!
-What's that gun to move stuff?
-I'm a soulless approximation of a cheese danish!
-Hold up guys, I'm watching The Powerpuff Girls.
-Not yet, I'm being attacked by an... OH CRAP!
+Pouvoir des lamas !
+Les lamas sont les plus cools !
+C'est quoi ce pistolet pour déplacer des trucs ?
+Je suis une approximation sans âme d'un danois au fromage !
+Attendez les gars, je regarde Les Supers Nanas.
+Pas encore, je suis attaqué par un... OH NON !
 ]]
 
+
 files["sbox_limits.txt"] =
-[[;The number by each cvar indicates the maximum value for the slider in XGUI.
+[[; Le nombre à côté de chaque cvar indique la valeur maximale pour le curseur dans XGUI.
 |Sandbox
 sbox_maxballoons 200
 sbox_maxbuttons 200
@@ -224,7 +221,7 @@ sbox_maxthrusters 200
 sbox_maxturrets 200
 sbox_maxvehicles 200
 sbox_maxwheels 200
-|Other
+|Autre
 sbox_maxdoors 100
 sbox_maxhoverboards 10
 sbox_maxkeypads 100
@@ -378,9 +375,11 @@ sbox_maxwire_wirers 25
 sbox_maxwire_xyzbeacons 25
 ]]
 
+
+
 files["votemaps.txt"] =
-[[; List of maps that are either included in the votemap command or excluded from it
-; Make sure to set votemapMapmode in config.txt to what you want.
+[[; Liste des cartes qui sont soit incluses dans la commande de vote de carte, soit exclues de celle-ci
+; Assurez-vous de définir votemapMapmode dans config.txt selon vos préférences.
 background01
 background02
 background03
@@ -394,52 +393,53 @@ test_hardware
 test_speakers
 ]]
 
+
 files["motd.txt"] =
-[[; These settings describe the default configuration and text to be shown on the MOTD. This only applies if ulx showMotd is set to 1.
-; All style configuration is set, and the values must be valid CSS.
-; Under info, you may have as many sections as you like. Valid types include "text", "ordered_list", "list".
-; Special type "mods" will automatically list workshop and regular addons in an unordered list.
-; Special type "admins" will automatically list all users within the groups specified in contents.
-; For an example of all of these items, please see the default file generated in ulx\lua\data.lua
+[[; Ces paramètres décrivent la configuration par défaut et le texte à afficher dans le MOTD. Cela s'applique uniquement si ulx showMotd est réglé sur 1.
+; Toute la configuration de style est définie, et les valeurs doivent être des CSS valides.
+; Sous info, vous pouvez avoir autant de sections que vous le souhaitez. Les types valides incluent "text", "ordered_list", "list".
+; Le type spécial "mods" listera automatiquement les addons du workshop et réguliers dans une liste non ordonnée.
+; Le type spécial "admins" listera automatiquement tous les utilisateurs dans les groupes spécifiés dans contents.
+; Pour un exemple de tous ces éléments, veuillez consulter le fichier par défaut généré dans ulx\lua\data.lua
 
 "info"
 {
-	"description" "Welcome to our server. Enjoy your stay!"
+	"description" "Bienvenue sur notre serveur. Profitez de votre séjour !"
 	{
-		"title" "About This Server"
+		"title" "À propos de ce serveur"
 		"type" "text"
 		"contents"
 		{
-			"This server is running ULX."
-			"To edit this default MOTD, open XGUI->Settings->Server->ULX MOTD, or edit data\ulx\motd.txt."
+			"Ce serveur utilise ULX."
+			"Pour modifier ce MOTD par défaut, ouvrez XGUI->Settings->Server->ULX MOTD, ou modifiez data\ulx\motd.txt."
 		}
 	}
 	{
-		"title" "Rules"
+		"title" "Règles"
 		"type" "ordered_list"
 		"contents"
 		{
-			"DON'T MESS WITH OTHER PLAYERS' STUFF. If they want help, they'll ask!"
-			"Don't spam."
-			"Have fun."
+			"NE TOUCHEZ PAS AUX AFFAIRES DES AUTRES JOUEURS. S'ils veulent de l'aide, ils demanderont !"
+			"Ne spammez pas."
+			"Amusez-vous."
 		}
 	}
 	{
-		"title" "Reporting Rulebreakers"
+		"title" "Signaler les infractions aux règles"
 		"type" "list"
 		"contents"
 		{
-			"Contact an available admin on this server and let them know."
-			"Use @ before typing a chat message to send it to admins."
-			"If no admin is available, note the players name and the current time, then let an admin know as soon as they are available."
+			"Contactez un admin disponible sur ce serveur et informez-le."
+			"Utilisez @ avant de taper un message de chat pour l'envoyer aux admins."
+			"Si aucun admin n'est disponible, notez le nom du joueur et l'heure actuelle, puis informez un admin dès qu'il est disponible."
 		}
 	}
 	{
-		"title" "Installed Addons"
+		"title" "Addons installés"
 		"type" "mods"
 	}
 	{
-		"title" "Our Admins"
+		"title" "Nos admins"
 		"type" "admins"
 		"contents"
 		{
